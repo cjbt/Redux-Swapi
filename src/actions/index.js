@@ -1,5 +1,7 @@
 import axios from 'axios';
 export const GET_PEOPLE = 'GET_PEOPLE';
+export const GET_PEOPLE_SUCCESS = 'GET_PEOPLE_SUCCESS';
+export const GET_PEOPLE_FAILURE = 'GET_PEOPLE_FAILURE';
 
 // we'll need axios
 
@@ -9,15 +11,21 @@ export const GET_PEOPLE = 'GET_PEOPLE';
 const url = 'https://swapi.co/api/people';
 
 export const getPeople = () => dispatch => {
+  dispatch({ type: GET_PEOPLE, payload: true });
   return axios
     .get(url)
     .then(res =>
       dispatch({
-        type: GET_PEOPLE,
-        payload: res.data.results
+        type: GET_PEOPLE_SUCCESS,
+        characters: res.data
       })
     )
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch({
+        type: GET_PEOPLE_FAILURE,
+        payload: err
+      })
+    );
 };
 // our action creator will be a function that returns a function
 // the url to fetch characters from is `https://swapi.co/api/people/`

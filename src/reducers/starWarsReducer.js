@@ -1,6 +1,8 @@
-import { GET_PEOPLE } from '../actions';
+import { GET_PEOPLE, GET_PEOPLE_FAILURE, GET_PEOPLE_SUCCESS } from '../actions';
 const initialState = {
-  characters: []
+  characters: [],
+  isLoading: false,
+  error: null
   // Array characters, Boolean fetching, null error.
 };
 export const charsReducer = (state = initialState, action) => {
@@ -10,7 +12,20 @@ export const charsReducer = (state = initialState, action) => {
     // your switch statement should handle all of these cases.
     case GET_PEOPLE:
       return {
-        characters: action.payload
+        ...state,
+        isLoading: true
+      };
+    case GET_PEOPLE_SUCCESS:
+      return {
+        ...state,
+        characters: action.payload,
+        isLoading: false
+      };
+    case GET_PEOPLE_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        idLoading: false
       };
     default:
       return state;
