@@ -17,7 +17,7 @@ export const getPeople = () => dispatch => {
     .then(res =>
       dispatch({
         type: GET_PEOPLE_SUCCESS,
-        characters: res.data
+        payload: res.data.results
       })
     )
     .catch(err =>
